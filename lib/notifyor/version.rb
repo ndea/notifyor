@@ -1,0 +1,3 @@
+module Notifyor
+  VERSION = "0.0.1"
+end

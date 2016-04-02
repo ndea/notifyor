@@ -1,0 +1,7 @@
+.bundle/
+log/*.log
+pkg/
+spec/test_app
+.idea
+.ruby-gemset
+.ruby-version

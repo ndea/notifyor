@@ -1,0 +1,2 @@
+module Notifyor
+end
