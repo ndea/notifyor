@@ -2,8 +2,9 @@ PATH
   remote: .
   specs:
     notifyor (0.0.1)
+      connection_pool
       rails (>= 4.0.0)
-      redis-objects
+      redis-objects (~> 1.2.1)
 
 GEM
   remote: https://rubygems.org/
@@ -46,6 +47,7 @@ GEM
     arel (6.0.3)
     builder (3.2.2)
     concurrent-ruby (1.0.1)
+    connection_pool (2.2.0)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     globalid (0.3.6)
