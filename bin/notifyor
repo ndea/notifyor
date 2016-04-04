@@ -1,4 +1,5 @@
 #! /usr/bin/env ruby
+require 'notifyor/remote/connection'
 
-redis_value = %x["#{File.expand_path File.dirname(__FILE__)}/remote.sh"]
-puts redis_value
+connection = Notifyor::Remote::Connection.new('rossbruch')
+puts connection.retrieve_value
