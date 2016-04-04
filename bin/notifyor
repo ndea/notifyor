@@ -1,0 +1,4 @@
+#! /usr/bin/env ruby
+
+redis_value = %x["#{File.expand_path File.dirname(__FILE__)}/remote.sh"]
+puts redis_value

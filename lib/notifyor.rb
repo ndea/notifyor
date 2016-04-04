@@ -1,5 +1,4 @@
 require 'redis'
-require 'redis-namespace'
 require 'redis-objects'
 require 'connection_pool'
 require 'notifyor/plugin'
