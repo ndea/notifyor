@@ -11,10 +11,9 @@ module Notifyor
     module ClassMethods
       attr_accessor :events
 
-      def notify_me(options = {})
+      def notifyor(options = {})
         self.events = ::Redis::List.new("notifyor:#{self.name.tableize}")
       end
-
     end
 
   end
