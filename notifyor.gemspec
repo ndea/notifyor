@@ -13,9 +13,9 @@ Gem::Specification.new do |s|
   s.summary = "Get realtime notifications on your desktop if something happens in your Rails app."
   s.description = "Notifyer creates growl notifications on your desktop if something happens in your Rails app."
   s.license = "MIT"
-  s.executables   = ["notifyor"]
+  s.executables   = ["notify_me"]
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc", "bin/notifyor"]
+  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc", "bin/notify_me"]
   s.test_files = Dir["spec/**/*"]
 
   s.add_dependency 'rails', '>= 4.0.0'

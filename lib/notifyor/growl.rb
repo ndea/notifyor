@@ -18,8 +18,8 @@ module Notifyor
       end
     end
 
-    def create_growl
-      adapter.create_growl
+    def create_growl(title, message)
+      adapter.create_growl(title, message)
     end
 
   end

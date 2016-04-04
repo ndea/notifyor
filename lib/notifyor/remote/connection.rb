@@ -14,7 +14,7 @@ module Notifyor
       end
 
       def growl_message
-        ::Notifyor::Growl.create_growl
+        ::Notifyor::Growl.create_growl("Benutzer erstellt", retrieve_value)
       end
     end
   end

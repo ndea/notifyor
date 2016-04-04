@@ -4,8 +4,8 @@ module Notifyor
       module TerminalNotifier
         extend self
 
-        def create_growl
-          %x(terminal-notifier -group 'address-book-sync' -title 'Address Book Sync' -subtitle 'Finished' -message 'Imported 42 contacts.' -activate 'com.apple.AddressBook')
+        def create_growl(title, message)
+          %x(terminal-notifier -title '#{title}' -message '#{message}')
         end
 
       end

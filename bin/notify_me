@@ -2,6 +2,4 @@
 require 'notifyor/remote/connection'
 
 connection = Notifyor::Remote::Connection.new('rossbruch')
-
-puts connection.retrieve_value
 connection.growl_message
