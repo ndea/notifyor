@@ -20,7 +20,19 @@ module Notifyor
         end
 
         opts.on('--ssh-host host', 'Provide the host address to your deployment/remote server') do |host|
-          ENV['ssh_host'] = host
+          ::Notifyor.configuration.ssh_host = host
+        end
+
+        opts.on('--ssh-password password', 'Provide the ssh password for the deployment/remote server') do |password|
+          ::Notifyor.configuration.ssh_password = password
+        end
+
+        opts.on('--ssh-port port', 'Provide the ssh port for the deployment/remote server') do |port|
+          ::Notifyor.configuration.ssh_port = port
+        end
+
+        opts.on('--ssh-user user', 'Provide the ssh user for the deployment/remote server') do |user|
+          ::Notifyor.configuration.ssh_user = user
         end
       end.parse!
     end
@@ -28,7 +40,7 @@ module Notifyor
     def check_notifications
       loop do
         ::Notifyor.configuration.notifyor_models.each do |model|
-          connection = Notifyor::Remote::Connection.new(::Notifyor.configuration.ssh_host)
+          connection = Notifyor::Remote::Connection.new
           connection.growl_message(model.tableize)
         end
         sleep 5

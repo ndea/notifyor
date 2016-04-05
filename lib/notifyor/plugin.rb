@@ -19,7 +19,7 @@ module Notifyor
       end
 
       def append_callbacks
-        self.send(:before_save, -> { self.class.events << I18n.t('notifyor.model.create', model: self.model_name.human) })
+        self.send(:before_create, -> { self.class.events << I18n.t('notifyor.model.create', model: self.model_name.human) })
         self.send(:before_destroy, -> { self.class.events << I18n.t('notifyor.model.delete', model: self.model_name.human) })
       end
 
