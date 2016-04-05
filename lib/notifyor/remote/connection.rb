@@ -16,7 +16,7 @@ module Notifyor
 
       def growl_message(model_name)
         value = retrieve_value(model_name)
-        ::Notifyor::Growl.create_growl("Benutzer erstellt", value) unless Notifyor::Util::Formatter.squish!(value).empty?
+        ::Notifyor::Growl.create_growl("Notifyor", value) unless Notifyor::Util::Formatter.squish!(value).empty?
       end
     end
   end
