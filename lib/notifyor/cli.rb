@@ -15,7 +15,6 @@ module Notifyor
         ::Notifyor.configuration.notifyor_models.each do |model|
           connection = Notifyor::Remote::Connection.new(::Notifyor.configuration.ssh_host)
           connection.growl_message(model.tableize)
-          puts "notify #{model}"
         end
         sleep 5
       end
