@@ -1,5 +1,12 @@
 #! /usr/bin/env ruby
+require 'notifyor'
 require 'notifyor/remote/connection'
 
-connection = Notifyor::Remote::Connection.new('rossbruch')
-connection.check_notifications
+loop do
+  Notifyor::Configuration.notifyor_models.each do |model|
+    connection = Notifyor::Remote::Connection.new(Notifyor::Configuration.configuration.ssh_host)
+    connection.growl_message(model.downcase.gsub('::', '_'))
+    puts "notify #{model}"
+  end
+  sleep 5
+end

@@ -1,3 +1,6 @@
+require 'redis-objects'
+require 'notifyor/growl'
+require 'notifyor/util/formatter'
 module Notifyor
   module Remote
     class Connection
@@ -8,19 +11,14 @@ module Notifyor
       end
 
       def retrieve_value(model_name)
-        ::Redis::List.new("notifyor:#{model_name.tableize}")
-        %x(ssh #{@ssh_host} 'redis-cli RPOP notifyor')
+        ::Redis::List.new("notifyor:#{model_name}", marshal: true)
+        %x(ssh #{@ssh_host} 'redis-cli LPOP notifyor:#{model_name}')
       end
 
-      def growl_message
-        value = retrieve_value('users')
+      def growl_message(model_name)
+        value = retrieve_value(model_name)
         ::Notifyor::Growl.create_growl("Benutzer erstellt", value) unless value.squish.blank?
       end
-
-      def check_notifications
-        %x(ssh #{@ssh_host} 'bash -l' < /Volumes/Data/development/open_source/notifyor/bin/remote.sh)
-      end
-
     end
   end
 end
