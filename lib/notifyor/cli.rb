@@ -10,6 +10,21 @@ module Notifyor
       ::Rails.application.eager_load!
     end
 
+    def parse
+      OptionParser.new do |opts|
+        opts.banner = 'Usage: notify_me [options]'
+
+        opts.on('-v', '--version',
+                'Show the current version of this gem') do
+          puts "Notifyor Version: #{::Notifyor::VERSION}"; exit
+        end
+
+        opts.on('--ssh-host host', 'Provide the host address to your deployment/remote server') do |host|
+          ENV['ssh_host'] = host
+        end
+      end.parse!
+    end
+
     def check_notifications
       loop do
         ::Notifyor.configuration.notifyor_models.each do |model|

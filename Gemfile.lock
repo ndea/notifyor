@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    notifyor (0.2)
+    notifyor (0.3)
       connection_pool
       rails (>= 4.0.0)
       redis-objects (~> 1.2.1)

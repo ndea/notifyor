@@ -6,6 +6,7 @@ require 'notifyor/remote/connection'
 begin
   cli = ::Notifyor::CLI.new
   cli.boot_system
+  cli.parse
   cli.check_notifications
 rescue => e
   STDERR.puts e.message
