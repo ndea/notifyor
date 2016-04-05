@@ -5,39 +5,11 @@ module Notifyor
     extend ::ActiveSupport::Concern
 
     included do
-      after_commit :notifyor_create_callback, on: :create, if: :on_create?
-      after_commit :notifyor_update_callback, on: :update, if: :on_update?
-      after_destroy :notifyor_destroy_callback, if: :on_destroy?
-    end
-
-    def on_create?
-      self.class.plugin_configuration[:only].include? :create
-    end
-
-    def on_update?
-      self.class.plugin_configuration[:only].include? :update
-    end
-
-    def on_destroy?
-      self.class.plugin_configuration[:only].include? :destroy
-    end
-
-    def notifyor_create_callback
-      self.class.notifyor_events << self.class.plugin_configuration[:messages][:create].call(self)
-    end
-
-    def notifyor_update_callback
-      self.class.notifyor_events << self.class.plugin_configuration[:messages][:update].call(self)
-    end
-
-    def notifyor_destroy_callback
-      self.class.notifyor_events << self.class.plugin_configuration[:messages][:destroy].call(self)
     end
 
     module ClassMethods
       attr_accessor :notifyor_events
       attr_accessor :notifyor_models
-      attr_accessor :plugin_configuration
 
       def notifyor(options = {})
         configure_plugin(options)
@@ -47,7 +19,23 @@ module Notifyor
       end
 
       def configure_plugin(options = {})
-        self.plugin_configuration = default_configuration.deep_merge(options)
+        configuration = default_configuration.deep_merge(options)
+        append_callbacks(configuration)
+      end
+
+      def append_callbacks(configuration)
+        configuration[:only].each do |action|
+          case action
+            when :create
+              self.after_commit -> { self.class.notifyor_events << configuration[:messages][:create].call(self) }, on: :create, if: -> { configuration[:only].include? :create}
+            when :update
+              self.after_commit -> {self.class.notifyor_events << configuration[:messages][:update].call(self) }, on: :update, if: -> { configuration[:only].include? :update}
+            when :destroy
+              self.before_destroy -> {self.class.notifyor_events << configuration[:messages][:destroy].call(self)}, if: -> { configuration[:only].include? :destroy}
+            else
+              #nop
+          end
+        end
       end
 
       def default_configuration
