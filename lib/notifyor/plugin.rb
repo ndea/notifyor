@@ -5,17 +5,6 @@ module Notifyor
     extend ::ActiveSupport::Concern
 
     included do
-      include ::Redis::Objects
-      before_create :notify_create, if: -> { self.class.events.present? }
-      before_destroy :notify_destroy, if: -> { self.class.events.present? }
-    end
-
-    def notify_create
-      self.class.events << {record_id: self.id, record_type: self.class.to_s, notification_type: 'create'}
-    end
-
-    def notify_destroy
-      self.class.events << {record_id: self.id, record_type: self.class.to_s, notification_type: 'destroy'}
     end
 
     module ClassMethods
@@ -23,9 +12,17 @@ module Notifyor
       attr_accessor :notifyor_models
 
       def notifyor(options = {})
+        self.extend ::Redis::Objects
         ::Notifyor.configuration.notifyor_models.add(self.name)
-        self.events = ::Redis::List.new("notifyor:#{self.name.tableize}", marshal: true)
+        self.events = ::Redis::List.new("notifyor:#{self.name.tableize}")
+        append_callbacks
       end
+
+      def append_callbacks
+        self.send(:before_save, -> { self.class.events << I18n.t('notifyor.model.create', model: self.model_name.human) })
+        self.send(:before_destroy, -> { self.class.events << I18n.t('notifyor.model.delete', model: self.model_name.human) })
+      end
+
     end
   end
 end
