@@ -1,12 +1,14 @@
 #! /usr/bin/env ruby
 require 'notifyor'
+require 'notifyor/cli'
 require 'notifyor/remote/connection'
 
-loop do
-  Notifyor::Configuration.notifyor_models.each do |model|
-    connection = Notifyor::Remote::Connection.new(Notifyor::Configuration.configuration.ssh_host)
-    connection.growl_message(model.downcase.gsub('::', '_'))
-    puts "notify #{model}"
-  end
-  sleep 5
+begin
+  cli = ::Notifyor::CLI.new
+  cli.boot_system
+  cli.check_notifications
+rescue => e
+  STDERR.puts e.message
+  STDERR.puts e.backtrace.join("\n")
+  exit 1
 end

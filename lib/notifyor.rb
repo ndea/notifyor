@@ -1,7 +1,7 @@
-require 'redis'
-require 'redis-objects'
-require 'connection_pool'
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+
 require 'notifyor/plugin'
+require 'notifyor/configuration'
 
 module Notifyor
   class << self
@@ -13,21 +13,5 @@ module Notifyor
     yield(configuration) if block_given?
   end
 
-  class Configuration
-    attr_accessor :redis_connection
-    attr_accessor :notifyor_models
-
-    def initialize
-      @redis_connection = ::Redis.new
-      Redis::Objects.redis = ::ConnectionPool.new(size: 5, timeout: 5) { @redis_connection }
-      @notifyor_models = ActiveRecord::Base.connection.tables.map do |model|
-        model.capitalize.singularize.camelize
-      end.select do |model|
-        model != 'SchemaMigration' &&
-            model.constantize.events
-      end
-    end
-  end
+  ActiveRecord::Base.send(:include, ::Notifyor::Plugin) if defined?(ActiveRecord)
 end
-
-ActiveRecord::Base.send :include, ::Notifyor::Plugin

@@ -1,8 +1,8 @@
-require 'notifyor'
+require 'active_support'
 
 module Notifyor
   module Plugin
-    extend ActiveSupport::Concern
+    extend ::ActiveSupport::Concern
 
     included do
       include ::Redis::Objects
@@ -23,6 +23,7 @@ module Notifyor
       attr_accessor :notifyor_models
 
       def notifyor(options = {})
+        ::Notifyor.configuration.notifyor_models.add(self.name)
         self.events = ::Redis::List.new("notifyor:#{self.name.tableize}", marshal: true)
       end
     end
