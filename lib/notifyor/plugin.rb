@@ -1,4 +1,5 @@
 require 'active_support'
+require 'redis'
 
 module Notifyor
   module Plugin
@@ -8,14 +9,8 @@ module Notifyor
     end
 
     module ClassMethods
-      attr_accessor :notifyor_events
-      attr_accessor :notifyor_models
-
       def notifyor(options = {})
         configure_plugin(options)
-        self.extend ::Redis::Objects
-        ::Notifyor.configuration.notifyor_models.add(self.name)
-        self.notifyor_events = ::Redis::List.new("notifyor:#{self.name.tableize}")
       end
 
       def configure_plugin(options = {})
@@ -27,11 +22,11 @@ module Notifyor
         configuration[:only].each do |action|
           case action
             when :create
-              self.after_commit -> { self.class.notifyor_events << configuration[:messages][:create].call(self) }, on: :create, if: -> { configuration[:only].include? :create}
+              self.after_commit -> { ::Notifyor.configuration.redis_connection.publish "notifyor", {message: configuration[:messages][:create].call(self)}.to_json }, on: :create, if: -> { configuration[:only].include? :create }
             when :update
-              self.after_commit -> {self.class.notifyor_events << configuration[:messages][:update].call(self) }, on: :update, if: -> { configuration[:only].include? :update}
+              self.after_commit -> { ::Notifyor.configuration.redis_connection.publish "notifyor", {message: configuration[:messages][:update].call(self)}.to_json }, on: :update, if: -> { configuration[:only].include? :update }
             when :destroy
-              self.before_destroy -> {self.class.notifyor_events << configuration[:messages][:destroy].call(self)}, if: -> { configuration[:only].include? :destroy}
+              self.before_destroy -> { ::Notifyor.configuration.redis_connection.publish "notifyor", {message: configuration[:messages][:destroy].call(self)}.to_json }, if: -> { configuration[:only].include? :destroy }
             else
               #nop
           end

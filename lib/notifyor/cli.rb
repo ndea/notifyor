@@ -23,10 +23,6 @@ module Notifyor
           ::Notifyor.configuration.ssh_host = host
         end
 
-        opts.on('--ssh-password password', 'Provide the ssh password for the deployment/remote server') do |password|
-          ::Notifyor.configuration.ssh_password = password
-        end
-
         opts.on('--ssh-port port', 'Provide the ssh port for the deployment/remote server') do |port|
           ::Notifyor.configuration.ssh_port = port
         end
@@ -34,16 +30,25 @@ module Notifyor
         opts.on('--ssh-user user', 'Provide the ssh user for the deployment/remote server') do |user|
           ::Notifyor.configuration.ssh_user = user
         end
+
+        opts.on('--tunnel-port tunnel_port', 'Provide the ssh user for the deployment/remote server') do |tunnel_port|
+          ::Notifyor.configuration.tunnel_port = tunnel_port
+        end
+
+        opts.on('--redis-port redis_port', 'Provide the ssh user for the deployment/remote server') do |redis_port|
+          ::Notifyor.configuration.redis_port = redis_port
+        end
       end.parse!
     end
 
     def check_notifications
-      loop do
-        ::Notifyor.configuration.notifyor_models.each do |model|
-          connection = Notifyor::Remote::Connection.new
-          connection.growl_message(model.tableize)
-        end
-        sleep 5
+      connection = Notifyor::Remote::Connection.new
+      begin
+        connection.build_tunnel
+        connection.build_redis_tunnel_connection
+        connection.subscribe_to_redis
+      rescue => e
+        STDOUT.write "Could not establish SSH tunnel. Reason: #{e.message}"
       end
     end
 
