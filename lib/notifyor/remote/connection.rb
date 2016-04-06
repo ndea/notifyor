@@ -1,5 +1,5 @@
 require 'json'
-require 'redis-objects'
+require 'redis'
 require 'notifyor/growl'
 require 'notifyor/util/formatter'
 require 'net/ssh/gateway'
