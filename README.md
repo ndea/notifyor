@@ -1,7 +1,7 @@
 # Notifyor
 ## [![](http://i.imgur.com/FrRacwt.png)]()
 Get realtime notifications (growl messages) on your desktop if something happens in your rails app.
-Events are pushed to redis and collected by ssh to be displayed as a growl message on your local machine.
+Notifyor publishes changes to a redis channel. Subscription is performed from your local machine via a ssh tunnel.
 
 Simply put:
 Very growl. Such notifications. Much Notifyor.
@@ -11,7 +11,7 @@ Very growl. Such notifications. Much Notifyor.
 Add this line to your Gemfile:
 
 ```ruby
-gem 'notifyor', '~> 0.4.3'
+gem 'notifyor', '~> 0.5.0'
 ```
 
 And then execute:
@@ -26,7 +26,6 @@ Notifyor.configure do |config|
   #config.ssh_host = 'some_host_address'
   #config.ssh_port = 22
   #config.ssh_user = 'some_user'
-  #config.ssh_password = 'please dont do this'
 end
 ```
 Every option can be overwritten with the CLI by providing certain arguments (see CLI) 
@@ -60,19 +59,21 @@ end
 ```
 ### CLI
 ```bash
-notify_me --ssh-host some_host --ssh-port some_port --ssh-user some_user --ssh-password some_password
+notify_me --ssh-host some_host --ssh-port some_port --ssh-user some_user
 ```
 #### Arguments for the CLI
- - **ssh-host** Provide the ssh host to which notifyor should connect to.
- - **ssh-port** Provide the ssh port on which notifyor should connect to.
- - **ssh-password** Provide the ssh password to your remote server. (Please use ssh keys so that you just have to provide the *ssh-host*. -> Segurity reasons)
- - **ssh-user** Provide the ssh user for your remote server. (Please use ssh keys so that you just have to provide the *ssh-host*. -> Segurity reasons)
+ - **ssh-host** Provide the ssh host to which notifyor should connect to. (Default is localhost)
+ - **ssh-port** Provide the ssh port on which notifyor should connect to. (Default is 22)
+ - **ssh-user** Provide the ssh user for your remote server. (Please use ssh keys so that you just have to provide the *ssh-host*. -> Security reasons)
+ - **tunnel-port** The tunnel port on which ssh will establish the connection. (Default is 2000)
+ - **redis-port** The port of your redis server (Default is 6379)
 
-**If you dont provide a ssh host notifyor will  pull messages from your local redis and display them.**
+**If you dont provide a ssh host notifyor will subscribe from your local redis and display them.**
+
+Every notify_me instance is an individual subscriber so multiple users can receive growl messages.
 
 ## Roadmap
 - Notifications for multiple OS (currently only Mac OS X)
-- Multiple users to receive notifications
 - Provide own logo in the growl notification
 - Specs
 - Documentation
