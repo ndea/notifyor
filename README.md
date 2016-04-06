@@ -14,6 +14,12 @@ Add this line to your Gemfile:
 gem 'notifyor', '~> 0.5.5'
 ```
 
+Or install it via rubygems if you just need the CLI.
+
+```bash
+gem install notifyor
+```
+
 And then execute:
 
     $ bundle install
