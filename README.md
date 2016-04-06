@@ -11,7 +11,7 @@ Very growl. Such notifications. Much Notifyor.
 Add this line to your Gemfile:
 
 ```ruby
-gem 'notifyor', '~> 0.5.3'
+gem 'notifyor', '~> 0.5.4'
 ```
 
 And then execute:

@@ -1,4 +1,5 @@
 require 'notifyor/version'
+require 'optparse'
 require 'active_support/dependencies'
 
 module Notifyor
@@ -11,7 +12,7 @@ module Notifyor
       ENV['ssh_tunnel_port'] = '2000'
       ENV['ssh_redis_port'] = '6379'
 
-      OptionParser.new do |opts|
+      ::OptionParser.new do |opts|
         opts.banner = 'Usage: notify_me [options]'
 
         opts.on('-v', '--version',
