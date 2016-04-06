@@ -1,6 +1,7 @@
 # Notifyor
 ## [![](http://i.imgur.com/FrRacwt.png)]()
 Get realtime notifications (growl messages) on your desktop if something happens in your rails app.
+Events are pushed to redis and collected by ssh to be displayed as a growl message on your local machine.
 
 Simply put:
 Very growl. Such notifications. Much Notifyor.
@@ -73,6 +74,8 @@ notify_me --ssh-host some_host --ssh-port some_port --ssh-user some_user --ssh-p
 - Notifications for multiple OS (currently only Mac OS X)
 - Multiple users to receive notifications
 - Provide own logo in the growl notification
+- Specs
+- Notifications on localhost
 
 ## Development
 
