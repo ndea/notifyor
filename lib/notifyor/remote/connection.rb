@@ -1,3 +1,4 @@
+require 'json'
 require 'redis-objects'
 require 'notifyor/growl'
 require 'notifyor/util/formatter'
@@ -31,7 +32,7 @@ module Notifyor
       def subscribe_to_redis
         @redis_tunnel_connection.subscribe('notifyor') do |on|
           on.message do |channel, msg|
-            data = JSON.parse(msg)
+            data = ::JSON.parse(msg)
             growl_message(data['message'])
           end
         end
