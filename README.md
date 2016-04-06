@@ -11,7 +11,7 @@ Very growl. Such notifications. Much Notifyor.
 Add this line to your Gemfile:
 
 ```ruby
-gem 'notifyor', '~> 0.5.0'
+gem 'notifyor', '~> 0.5.3'
 ```
 
 And then execute:
@@ -23,12 +23,9 @@ Run the bundle command to install it.
 After you install Notifyor create a new file **config/initializers/notifyor.rb** (a rails generator will be available soon for this task). Add the following content to your initializer.
 ```ruby
 Notifyor.configure do |config|
-  #config.ssh_host = 'some_host_address'
-  #config.ssh_port = 22
-  #config.ssh_user = 'some_user'
+    #config.redis_connection = Redis.new
 end
 ```
-Every option can be overwritten with the CLI by providing certain arguments (see CLI) 
 
 ## Usage
 
@@ -58,6 +55,8 @@ class SomeClass < ActiveRecord::Base
 end 
 ```
 ### CLI
+The CLI can be used independently just install the gem and run following command. 
+
 ```bash
 notify_me --ssh-host some_host --ssh-port some_port --ssh-user some_user
 ```

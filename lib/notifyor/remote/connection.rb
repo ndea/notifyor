@@ -1,19 +1,17 @@
 require 'redis-objects'
-require 'notifyor'
 require 'notifyor/growl'
 require 'notifyor/util/formatter'
-require 'notifyor/errors/ssh_error'
 require 'net/ssh/gateway'
 module Notifyor
   module Remote
     class Connection
 
       def initialize
-        @ssh_host = ::Notifyor.configuration.ssh_host
-        @ssh_port = ::Notifyor.configuration.ssh_port
-        @ssh_user = ::Notifyor.configuration.ssh_user
-        @tunnel_port = ::Notifyor.configuration.tunnel_port
-        @redis_port = ::Notifyor.configuration.redis_port
+        @ssh_host = ENV['ssh_host']
+        @ssh_port = ENV['ssh_port']
+        @ssh_user = ENV['ssh_user']
+        @tunnel_port = ENV['ssh_tunnel_port']
+        @redis_port = ENV['ssh_redis_port']
         @ssh_gateway = nil
         @redis_tunnel_connection = nil
       end
