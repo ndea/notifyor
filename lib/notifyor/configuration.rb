@@ -14,6 +14,7 @@ module Notifyor
       Redis::Objects.redis = ::ConnectionPool.new(size: 5, timeout: 5) { @redis_connection }
       @notifyor_models = Set.new
       @ssh_port = 22
+      @ssh_host = 'localhost'
     end
   end
 end

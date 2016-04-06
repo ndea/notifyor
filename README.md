@@ -10,7 +10,7 @@ Very growl. Such notifications. Much Notifyor.
 Add this line to your Gemfile:
 
 ```ruby
-gem 'notifyor', '~> 0.4.2'
+gem 'notifyor', '~> 0.4.3'
 ```
 
 And then execute:
@@ -66,6 +66,8 @@ notify_me --ssh-host some_host --ssh-port some_port --ssh-user some_user --ssh-p
  - **ssh-port** Provide the ssh port on which notifyor should connect to.
  - **ssh-password** Provide the ssh password to your remote server. (Please use ssh keys so that you just have to provide the *ssh-host*. -> Segurity reasons)
  - **ssh-user** Provide the ssh user for your remote server. (Please use ssh keys so that you just have to provide the *ssh-host*. -> Segurity reasons)
+
+**If you dont provide a ssh host notifyor will  pull messages from your local redis and display them.**
 
 ## Roadmap
 - Notifications for multiple OS (currently only Mac OS X)

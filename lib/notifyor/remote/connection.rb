@@ -27,7 +27,11 @@ module Notifyor
       end
 
       def retrieve_value(model_name)
-        %x(#{build_ssh_cmd} '#{build_redis_cmd(model_name)}')
+        if ['127.0.0.1', 'localhost'].include? @ssh_host
+          %x(#{build_redis_cmd(model_name)})
+        else
+          %x(#{build_ssh_cmd} '#{build_redis_cmd(model_name)}')
+        end
       end
 
       def growl_message(model_name)
