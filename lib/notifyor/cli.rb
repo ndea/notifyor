@@ -1,6 +1,5 @@
 require 'notifyor/version'
 require 'optparse'
-require 'active_support/dependencies'
 
 module Notifyor
   class CLI
