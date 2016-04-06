@@ -75,7 +75,7 @@ notify_me --ssh-host some_host --ssh-port some_port --ssh-user some_user --ssh-p
 - Multiple users to receive notifications
 - Provide own logo in the growl notification
 - Specs
-- Notifications on localhost
+- Documentation
 
 ## Development
 
