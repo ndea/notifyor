@@ -77,6 +77,7 @@ Every notify_me instance is an individual subscriber so multiple users can recei
 - Provide own logo in the growl notification
 - Specs
 - Documentation
+- Connect to remote host via SSH tunnel.
 
 ## Development
 
