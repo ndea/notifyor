@@ -76,6 +76,7 @@ notify_me --ssh-host some_host --ssh-port some_port --ssh-user some_user --ssh-p
 - Provide own logo in the growl notification
 - Specs
 - Documentation
+- Connect to remote host via SSH tunnel.
 
 ## Development
 
