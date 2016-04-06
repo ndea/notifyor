@@ -5,7 +5,7 @@ PATH
       connection_pool
       net-ssh
       net-ssh-gateway
-      redis-objects (~> 1.2.1)
+      redis
       terminal-notifier
 
 GEM
@@ -17,8 +17,6 @@ GEM
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     redis (3.2.2)
-    redis-objects (1.2.1)
-      redis (>= 3.0.2)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
