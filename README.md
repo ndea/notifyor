@@ -11,7 +11,7 @@ Very growl. Such notifications. Much Notifyor.
 Add this line to your Gemfile:
 
 ```ruby
-gem 'notifyor', '~> 0.5.9'
+gem 'notifyor', '~> 0.6.0'
 ```
 
 Or install it via rubygems if you just need the CLI.
@@ -34,7 +34,8 @@ end
 ```
 
 ### Linux
-If you want to receive growl notifications on a linux system you have to install the *libnotify-bin*
+If you want to receive growl notifications on a linux system you have to install the *libnotify-bin*.
+
 ```bash
 sudo apt-get install libnotify-bin 
 ```
