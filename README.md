@@ -91,7 +91,7 @@ notify_me --ssh-host some_host --ssh-port some_port --ssh-user some_user
 Every notify_me instance is an individual subscriber so multiple users can receive growl messages.
 
 ## Roadmap
-- Notifications for multiple OS (currently only Mac OS X)
+- Notifications for multiple OS (currently only Mac OS X and Linux systems with libnotify-lib installed.)
 - Provide own logo in the growl notification
 - Specs
 - Documentation
