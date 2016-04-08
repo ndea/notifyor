@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    notifyor (0.5.8)
+    notifyor (0.5.9)
       connection_pool
       net-ssh
       net-ssh-gateway

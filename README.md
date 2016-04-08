@@ -33,6 +33,18 @@ Notifyor.configure do |config|
 end
 ```
 
+### Linux
+If you want to receive growl notifications on a linux system you have to install the *libnotify-bin*
+```bash
+sudo apt-get install libnotify-bin 
+```
+
+### Mac OS X
+Notifyor runs out of the box on Mac OS X. Lucky you.
+
+### Windows
+Currently not supported (see roadmap)
+
 ## Usage
 
 ### Plugin

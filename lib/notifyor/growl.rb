@@ -1,10 +1,21 @@
+require 'notifyor/util/os_analyzer'
 module Notifyor
   module Growl
     extend self
 
     def adapter
       return @adapter if @adapter
-      self.adapter = :terminal_notifier
+      self.adapter =
+          case ::Notifyor::Util::OSAnalyzer.os
+            when :macosx
+              :terminal_notifier
+            when :linux
+              :libnotify_notifier
+            when :unix
+              :libnotify_notifier
+            else
+              raise 'Operating system not recognized.'
+          end
       @adapter
     end
 
