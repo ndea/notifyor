@@ -11,7 +11,7 @@ Very growl. Such notifications. Much Notifyor.
 Add this line to your Gemfile:
 
 ```ruby
-gem 'notifyor', '~> 0.6.0'
+gem 'notifyor', '~> 0.7.0'
 ```
 
 Or install it via rubygems if you just need the CLI.
@@ -85,6 +85,7 @@ notify_me --ssh-host some_host --ssh-port some_port --ssh-user some_user
  - **ssh-user** Provide the ssh user for your remote server. (Please use ssh keys so that you just have to provide the *ssh-host*. -> Security reasons)
  - **tunnel-port** The tunnel port on which ssh will establish the connection. (Default is 2000)
  - **redis-port** The port of your redis server (Default is 6379)
+ - **channel** Listen on another channel. Every message received on this channel will be displayed in a growl notification. (Default is notifyor)
 
 **If you dont provide a ssh host notifyor will subscribe from your local redis and display them.**
 
