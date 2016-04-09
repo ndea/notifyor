@@ -32,8 +32,8 @@ module Notifyor
       def subscribe_to_redis
         @redis_tunnel_connection.subscribe('notifyor') do |on|
           on.message do |channel, msg|
-            data = ::JSON.parse(msg)
-            growl_message(data['message'])
+            STDOUT.write "INFO - Message received on channel: #{channel}"
+            growl_message(msg)
           end
         end
       end

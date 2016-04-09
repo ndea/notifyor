@@ -22,11 +22,11 @@ module Notifyor
         configuration[:only].each do |action|
           case action
             when :create
-              self.after_commit -> { ::Notifyor.configuration.redis_connection.publish "notifyor", {message: configuration[:messages][:create].call(self)}.to_json }, on: :create, if: -> { configuration[:only].include? :create }
+              self.after_commit -> { ::Notifyor.configuration.redis_connection.publish "notifyor", configuration[:messages][:create].call(self) }, on: :create, if: -> { configuration[:only].include? :create }
             when :update
-              self.after_commit -> { ::Notifyor.configuration.redis_connection.publish "notifyor", {message: configuration[:messages][:update].call(self)}.to_json }, on: :update, if: -> { configuration[:only].include? :update }
+              self.after_commit -> { ::Notifyor.configuration.redis_connection.publish "notifyor", configuration[:messages][:update].call(self) }, on: :update, if: -> { configuration[:only].include? :update }
             when :destroy
-              self.before_destroy -> { ::Notifyor.configuration.redis_connection.publish "notifyor", {message: configuration[:messages][:destroy].call(self)}.to_json }, if: -> { configuration[:only].include? :destroy }
+              self.before_destroy -> { ::Notifyor.configuration.redis_connection.publish "notifyor", configuration[:messages][:destroy].call(self) }, if: -> { configuration[:only].include? :destroy }
             else
               #nop
           end
@@ -37,9 +37,9 @@ module Notifyor
         {
             only: [:create, :destroy, :update],
             messages: {
-                create: -> (model) { I18n.t('notifyor.model.create', model: model.class.model_name.human) },
-                update: -> (model) { I18n.t('notifyor.model.update', model: model.class.model_name.human) },
-                destroy: -> (model) { I18n.t('notifyor.model.destroy', model: model.class.model_name.human) }
+                create: -> (model) { I18n.t('notifyor.model.create') },
+                update: -> (model) { I18n.t('notifyor.model.update') },
+                destroy: -> (model) { I18n.t('notifyor.model.destroy') }
             }
         }
       end
