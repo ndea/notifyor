@@ -8,11 +8,12 @@ module Notifyor
     class Connection
 
       def initialize
-        @ssh_host = ENV['ssh_host']
-        @ssh_port = ENV['ssh_port']
+        @ssh_host = ENV['ssh_host'] || 'localhost'
+        @ssh_port = ENV['ssh_port'] || '22'
         @ssh_user = ENV['ssh_user']
-        @tunnel_port = ENV['ssh_tunnel_port']
-        @redis_port = ENV['ssh_redis_port']
+        @tunnel_port = ENV['ssh_tunnel_port'] || '2000'
+        @redis_port = ENV['ssh_redis_port'] || '6379'
+        @redis_channel = ENV['channel'] || 'notifyor'
         @ssh_gateway = nil
         @redis_tunnel_connection = nil
       end
@@ -30,9 +31,9 @@ module Notifyor
       end
 
       def subscribe_to_redis
-        @redis_tunnel_connection.subscribe('notifyor') do |on|
+        @redis_tunnel_connection.subscribe(@redis_channel) do |on|
           on.message do |channel, msg|
-            STDOUT.write "INFO - Message received on channel: #{channel}"
+            STDERR.write "INFO - Message received on channel: #{channel} \n"
             growl_message(msg)
           end
         end

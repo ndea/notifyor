@@ -20,7 +20,7 @@ module Notifyor
         end
 
         opts.on('--ssh-host host', 'Provide the host address to your deployment/remote server') do |host|
-         ENV['ssh_host'] = host
+          ENV['ssh_host'] = host
         end
 
         opts.on('--ssh-port port', 'Provide the ssh port for the deployment/remote server') do |port|
@@ -37,6 +37,10 @@ module Notifyor
 
         opts.on('--redis-port redis_port', 'Provide the ssh user for the deployment/remote server') do |redis_port|
           ENV['ssh_redis_port'] = redis_port
+        end
+
+        opts.on('--channel [channel]', 'Provide channel on which notifyor should listen.') do |channel|
+          ENV['channel'] = channel
         end
       end.parse!
     end
