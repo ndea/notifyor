@@ -73,6 +73,15 @@ class SomeClass < ActiveRecord::Base
     notifyor only: [:create]
 end 
 ```
+
+The default channel on which notifyor publishes messages is 'notifyor'. This can be changed via the **channel** option.
+You can provide multiple channels and notifyor will publish messages on them. (See the channel option on the CLI to subscribe to those channels).
+```ruby
+class SomeClass < ActiveRecord::Base
+    notifyor channels: ['channel1', 'channel2']
+end
+```
+
 ### CLI
 The CLI can be used independently just install the gem and run following command. 
 
