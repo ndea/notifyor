@@ -1,3 +1,4 @@
+require 'terminal-notifier'
 module Notifyor
   module Growl
     module Adapters
@@ -5,7 +6,7 @@ module Notifyor
         extend self
 
         def create_growl(title, message)
-          %x(terminal-notifier -title '#{title}' -message '#{message}')
+          ::TerminalNotifier.notify(message, :title => title)
         end
 
       end
